@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapi - Evaluación Nutricional</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d0f0ff; /* Celeste pastel */
+      padding: 20px;
+    }
+    .barra {
+      background: #ccc;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .kit-img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Evaluación Nutricional del Niño</h2>
+
+  <div id="resultado"></div>
+
+  <script>
+    // Variables de ejemplo (puedes reemplazar con valores reales del robot)
+    const clasificacion = "Niño con anemia grado 1";
+    const alertaPeso = "Peso bajo";
+    const alertaTalla = "Talla adecuada";
+    const recomendacion = "Brindar suplemento de hierro y dieta rica en hierro";
+    const hemo = 9.5;
+    const peso = 10.2;
+    const talla = 82;
+    const imagen = "https://cdn-icons-png.flaticon.com/512/3144/3144456.png"; // Imagen infantil de nutrición
+    const referencia = {
+      pesoMin: 11,
+      pesoMax: 14,
+      tallaMin: 80,
+      tallaMax: 90
+    };
+
+    document.getElementById("resultado").innerHTML = `
+      <strong>\${clasificacion} \${clasificacion.includes('anemia') ? '😟' : '😊'}</strong><br>
+      <strong>\${alertaPeso}</strong> | <strong>\${alertaTalla}</strong><br>
+      \${recomendacion}<br><br>
+
+      <div>
+        <label><strong>Nivel de Hemoglobina:</strong> \${hemo} g/dL</label>
+        <div class="barra">
+          <div style="width: \${Math.min((hemo / 15) * 100, 100)}%; background: \${hemo < 11 ? '#dc3545' : '#28a745'}; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div>
+        <label><strong>Peso comparado al ideal:</strong> \${peso} kg</label>
+        <div class="barra">
+          <div style="width: \${Math.min(((peso - referencia.pesoMin) / (referencia.pesoMax - referencia.pesoMin)) * 100, 100)}%; background: \${peso < referencia.pesoMin || peso > referencia.pesoMax ? '#ffc107' : '#28a745'}; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div>
+        <label><strong>Talla comparada al ideal:</strong> \${talla} cm</label>
+        <div class="barra">
+          <div style="width: \${Math.min(((talla - referencia.tallaMin) / (referencia.tallaMax - referencia.tallaMin)) * 100, 100)}%; background: \${talla < referencia.tallaMin || talla > referencia.tallaMax ? '#ffc107' : '#28a745'}; height: 100%;"></div>
+        </div>
+      </div>
+
+      <img src="\${imagen}" class="kit-img">
+    `;
+  </script>
+</body>
+</html>
